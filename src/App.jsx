@@ -1,12 +1,16 @@
 import React from "react";
 import TodoList from "./TodoList";
+import { BrowserRouter, Router, Routes, Route } from "react-router-dom";
+import CompletedTasks from "./CompletedTasks";
 function App() {
-  function handleChange() {
-    console.log("test");
-  }
   return (
     <>
-      <TodoList />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<TodoList />} />
+          <Route path="/CompletedTasks" element={<CompletedTasks />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }

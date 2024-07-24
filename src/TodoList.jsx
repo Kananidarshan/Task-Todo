@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
 
 const TodoList = () => {
   const storedTasks = localStorage.getItem("Tasks");
@@ -91,7 +92,7 @@ const TodoList = () => {
             value={task}
             onChange={(e) => setTask(e.target.value)}
             className="p-3 border rounded-lg w-full sm:w-auto"
-            placeholder="Enter a new task"
+            placeholder="Enter a new Task"
           />
           <select
             value={priority}
@@ -120,15 +121,9 @@ const TodoList = () => {
           {tasks.map((task, index) => (
             <li
               key={index}
-              className="bg-gray-700 p-4 rounded-lg flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0"
+              className="bg-gray-700 p-4 rounded-lg flex gap-2 flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0"
             >
               <div className="flex items-center space-x-4 w-full">
-                <input
-                  type="checkbox"
-                  checked={task.completed}
-                  onChange={() => toggleTaskCompletion(index)}
-                  className="w-5 h-5"
-                />
                 {isEditing && currentTaskIndex === index ? (
                   <div className="flex flex-col w-full space-y-2">
                     <input
@@ -155,14 +150,9 @@ const TodoList = () => {
                   </div>
                 ) : (
                   <div className="flex flex-col w-full">
-                    <span
-                      className={`text-lg ${
-                        task.completed
-                          ? "line-through text-gray-400"
-                          : "text-white"
-                      }`}
-                    >
-                      {task.text} (Priority: {task.priority})
+                    <span className="text-white">
+                      {task.text} <br />
+                      (Priority: {task.priority})
                     </span>
                     {task.dueDate && (
                       <span className="text-gray-300">
@@ -173,6 +163,16 @@ const TodoList = () => {
                 )}
               </div>
               <div className="flex space-x-2">
+                <button
+                  onClick={() => toggleTaskCompletion(index)}
+                  className={`${
+                    task.completed ? "bg-green-600" : "bg-blue-600"
+                  } text-white px-4 py-2 rounded-lg hover:${
+                    task.completed ? "bg-green-700" : "bg-blue-700"
+                  } transition`}
+                >
+                  {task.completed ? "Completed" : "Complete"}
+                </button>
                 {isEditing && currentTaskIndex === index ? (
                   <button
                     onClick={updateTask}
@@ -198,6 +198,13 @@ const TodoList = () => {
             </li>
           ))}
         </ul>
+      </div>
+      <div className="flex justify-center mt-4">
+        <Link to="/CompletedTasks">
+          <button className="bg-gray-500 rounded-md">
+            <h1 className="text-white px-2 py-1">Completed Page</h1>
+          </button>
+        </Link>
       </div>
       <ToastContainer />
     </div>
